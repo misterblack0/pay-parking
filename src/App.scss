@@ -1,6 +1,5 @@
 $border: 1px solid grey;
 $transition: 300ms;
-
 $color-primary: #3a404c;
 $color-secondary: #61dafb;
 $color-secondary-darker: darken($color-secondary, 30%);
@@ -19,21 +18,19 @@ header {
 }
 
 main {
-  //background-color: #61dafb;
+  margin: 3rem;
+  display: flex;
 }
 
 .spots_container {
-  margin: 3rem;
-  //background: darkslateblue;
   width: 30%;
-  //height: 30rem;
   text-transform: uppercase;
 }
 
 .spots_header {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 3rem;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 3rem;
 }
 
 .spots {
@@ -50,16 +47,36 @@ main {
     "spot-5 spot-10";
 }
 
-.spot-1 { grid-area: spot-1; }
-.spot-2 { grid-area: spot-2; }
-.spot-3 { grid-area: spot-3; }
-.spot-4 { grid-area: spot-4; }
-.spot-5 { grid-area: spot-5; }
-.spot-6 { grid-area: spot-6; }
-.spot-7 { grid-area: spot-7; }
-.spot-8 { grid-area: spot-8; }
-.spot-9 { grid-area: spot-9; }
-.spot-10 { grid-area: spot-10; }
+.spot-1 {
+  grid-area: spot-1;
+}
+.spot-2 {
+  grid-area: spot-2;
+}
+.spot-3 {
+  grid-area: spot-3;
+}
+.spot-4 {
+  grid-area: spot-4;
+}
+.spot-5 {
+  grid-area: spot-5;
+}
+.spot-6 {
+  grid-area: spot-6;
+}
+.spot-7 {
+  grid-area: spot-7;
+}
+.spot-8 {
+  grid-area: spot-8;
+}
+.spot-9 {
+  grid-area: spot-9;
+}
+.spot-10 {
+  grid-area: spot-10;
+}
 
 .spot {
   color: $color-secondary;
@@ -70,23 +87,24 @@ main {
   justify-content: center;
   align-items: center;
   cursor: pointer;
-&:hover {
-  transition: $transition;
-  background-color: $color-primary;
+  &:hover {
+    transition: $transition;
+    background-color: $color-primary;
+  }
 }
-
-}
-.left-spot {
+.spot-left {
   border-left: $border;
 }
-.right-spot {
+.spot-right {
   border-right: $border;
 }
 
 svg {
-  transform: rotate(360deg) scaleX(-1);
-
   width: 8rem;
   height: 8rem;
   fill: $color-secondary-darker;
+}
+
+.inverse-car {
+  transform: rotate(360deg) scaleX(-1);
 }
