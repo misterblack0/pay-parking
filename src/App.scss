@@ -3,6 +3,8 @@ $transition: 300ms;
 $color-primary: #3a404c;
 $color-secondary: #61dafb;
 $color-secondary-darker: darken($color-secondary, 30%);
+$color-secondary-darker-light: darken($color-secondary, 20%);
+$color-secondary-darkest: darken($color-secondary, 50%);
 
 .App {
   background-color: #282c34;
@@ -10,29 +12,24 @@ $color-secondary-darker: darken($color-secondary, 30%);
   font-size: calc(10px + 2vmin);
   color: white;
 }
-
 header {
-  display: flex;
-  justify-content: center;
+  text-align: center;
   color: #61dafb;
 }
-
 main {
   margin: 3rem;
+  gap: 3rem;
   display: flex;
 }
-
 .spots_container {
-  width: 30%;
+  width: 50%;
   text-transform: uppercase;
 }
-
 .spots_header {
   display: flex;
   justify-content: center;
   margin-bottom: 3rem;
 }
-
 .spots {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -46,7 +43,6 @@ main {
     "spot-4 spot-9"
     "spot-5 spot-10";
 }
-
 .spot-1 {
   grid-area: spot-1;
 }
@@ -77,34 +73,116 @@ main {
 .spot-10 {
   grid-area: spot-10;
 }
-
 .spot {
-  color: $color-secondary;
-  height: 6rem;
-  border-top: $border;
-  border-bottom: $border;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  &:hover {
+  .tooltip-wrapper {
+    color: $color-secondary;
+    height: 7.5rem;
+    border-top: $border;
+    border-bottom: $border;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    flex-direction: column;
     transition: $transition;
-    background-color: $color-primary;
+    &:hover {
+      background-color: $color-primary;
+    }
   }
 }
 .spot-left {
-  border-left: $border;
+  .tooltip-wrapper {
+    border-left: $border;
+  }
 }
 .spot-right {
-  border-right: $border;
+  .tooltip-wrapper {
+    border-right: $border;
+  }
 }
-
 svg {
   width: 8rem;
   height: 8rem;
   fill: $color-secondary-darker;
+  z-index: 10;
 }
-
 .inverse-car {
   transform: rotate(360deg) scaleX(-1);
+}
+.enter-parking {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  input,
+  button {
+    height: 3.8rem;
+    border: none;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 1.2rem;
+    font-family: inherit;
+  }
+  input {
+    transition: $transition;
+    border-radius: 0.25rem 0 0 0.25rem;
+    padding: 0 0.5rem;
+  }
+  button {
+    background-color: $color-secondary;
+    transition: $transition;
+    cursor: pointer;
+    border-radius: 0 0.25rem 0.25rem 0;
+    &:hover {
+      background-color: $color-secondary-darker-light;
+    }
+  }
+}
+.parked-cars {
+  width: 50%;
+  table {
+    width: 100%;
+    font-size: 1.1rem;
+    border: 1px solid grey;
+    td {
+      padding: 0.2rem;
+    }
+  }
+  table thead {
+    background-color: #04aa6d;
+
+    tr {
+      vertical-align: middle;
+    }
+    tr th {
+      padding: 2.2rem;
+    }
+  }
+  table td div {
+    text-align: center;
+  }
+  tbody tr td {
+    width: 8rem;
+    text-align: center;
+  }
+  tbody {
+    tr:nth-child(even) {
+      background-color: $color-secondary-darkest;
+    }
+    tr:hover {
+      background-color: $color-secondary-darker-light;
+    }
+  }
+}
+.parked-cars_wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.parked-cars_header {
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 3rem;
+  font-size: inherit;
 }

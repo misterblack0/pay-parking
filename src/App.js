@@ -1,10 +1,16 @@
 import React, { useState } from "react";
 import { ReactComponent as CarIcon } from "./assets/icons/car.svg";
-
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import Tooltip from "./Tooltip";
 import "./App.scss";
 
+dayjs.extend(relativeTime);
+const maxParkingSpots = 10;
+const firstHourPrice = 10;
+const secondaryPrice = 5;
+
 function App() {
-  const maxParkingSpots = 10;
   const [availableSpots, setAvailableSpots] = useState(10);
   const [spots, setSpots] = useState([]);
   const [carNumber, setCarNumber] = useState("");
@@ -17,7 +23,7 @@ function App() {
       updatedSpots.push({
         id: !spots.length ? 1 : spots[spots.length - 1].id + 1,
         number: carNumber,
-        timeEnteredParking: new Date(),
+        timeEnteredParking: dayjs(),
       });
       setSpots(updatedSpots);
       setAvailableSpots((prevState) => prevState - 1);
@@ -30,11 +36,51 @@ function App() {
   const handleExitParking = (id) => {
     const updatedSpots = spots.filter((spot) => spot.id !== id);
     setSpots(updatedSpots);
+
+    const selectedSpot = spots.find((spot) => spot.id === id);
+
+    const hoursParked = dayjs().diff(
+      selectedSpot.timeEnteredParking,
+      "hour",
+      true
+    );
+
+    let sumToPay;
+
+    if (Math.ceil(hoursParked) === 1) {
+      sumToPay = firstHourPrice;
+    } else {
+      sumToPay = Math.ceil(hoursParked) * secondaryPrice + secondaryPrice;
+    }
+
+    alert(
+      `Car number: ${selectedSpot.number}\nEntered parking lot at: ${dayjs(
+        selectedSpot.timeEnteredParking
+      ).format("HH:mm:ss DD-MM-YYYY")}\nLeaved parking lot at: ${dayjs().format(
+        "HH:mm:ss DD-MM-YYYY"
+      )}\n\nPRICES: 1st hour: 10 RON | Additional hours: 5 RON / hour\nYou have to pay the sum of ${sumToPay} RON for ${Math.ceil(
+        hoursParked
+      )} ${Math.ceil(hoursParked) === 1 ? "hour" : "hours"}.`
+    );
+    setAvailableSpots((prevState) => prevState + 1);
   };
 
   return (
     <div className="App">
       <header>Pay Parking</header>
+      <div className="enter-parking">
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            required
+            placeholder="car number"
+            value={carNumber}
+            maxLength="10"
+            onChange={(e) => setCarNumber(e.target.value.toUpperCase())}
+          />
+          <button>Enter parking lot</button>
+        </form>
+      </div>
       <main>
         <div className="spots_container">
           <div className="spots_header">Available spots - {availableSpots}</div>
@@ -48,60 +94,49 @@ function App() {
                     spot.id <= 5 ? "left" : "right"
                   }`}
                 >
-                  {spot.id <= 5 ? (
-                    <CarIcon />
-                  ) : (
-                    <CarIcon className="inverse-car" />
-                  )}
+                  <Tooltip content="Exit parking">
+                    {spot.number}
+                    {spot.id <= 5 ? (
+                      <CarIcon />
+                    ) : (
+                      <CarIcon className="inverse-car" />
+                    )}
+                  </Tooltip>
                 </div>
               ))}
-
-            {/*<div className="spot left-spot spot-1">*/}
-            {/*  <CarIcon />*/}
-            {/*</div>*/}
-            {/*<div className="spot left-spot spot-2">2</div>*/}
-            {/*<div className="spot left-spot spot-3">3</div>*/}
-            {/*<div className="spot left-spot spot-4">4</div>*/}
-            {/*<div className="spot left-spot spot-5">5</div>*/}
-            {/*<div className="spot right-spot spot-6">6</div>*/}
-            {/*<div className="spot right-spot spot-7">7</div>*/}
-            {/*<div className="spot right-spot spot-8">8</div>*/}
-            {/*<div className="spot right-spot spot-9">9</div>*/}
-            {/*<div className="spot right-spot spot-10">10</div>*/}
           </div>
         </div>
-
-        <div className="parked-cars-info">
-          {spots.length !== 0 && (
-            <table>
-              <thead>
-                <tr>
-                  <th>Number</th>
-                  <th>Time Spent</th>
-                </tr>
-              </thead>
-              <tbody>
-                {spots.map((spot) => (
+        <div className="parked-cars">
+          <div className="parked-cars_header">Parked cars info</div>
+          <div className="parked-cars_wrapper">
+            {spots.length !== 0 ? (
+              <table>
+                <thead>
                   <tr>
-                    <td>{spot.number}</td>
-                    <td>{spot.timeEnteredParking.getTime()}</td>
+                    <th>Car Number</th>
+                    <th>Parked at</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
-        </div>
-
-        <div className="enter-parking">
-          <form onSubmit={handleSubmit}>
-            <input
-              type="text"
-              required
-              value={carNumber}
-              onChange={(e) => setCarNumber(e.target.value.toUpperCase())}
-            />
-            <button>Enter parking lot</button>
-          </form>
+                </thead>
+                <tbody>
+                  {spots.map((spot) => (
+                    <tr key={spot.id}>
+                      <td>{spot.number}</td>
+                      <td>
+                        <div>
+                          {dayjs(spot.timeEnteredParking).format("HH:mm:ss")}
+                        </div>
+                        <div>
+                          {dayjs(spot.timeEnteredParking).format("DD-MM-YYYY")}
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <div>Parking lot is empty.</div>
+            )}
+          </div>
         </div>
       </main>
     </div>
