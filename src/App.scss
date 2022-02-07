@@ -43,42 +43,11 @@ main {
     "spot-4 spot-9"
     "spot-5 spot-10";
 }
-.spot-1 {
-  grid-area: spot-1;
-}
-.spot-2 {
-  grid-area: spot-2;
-}
-.spot-3 {
-  grid-area: spot-3;
-}
-.spot-4 {
-  grid-area: spot-4;
-}
-.spot-5 {
-  grid-area: spot-5;
-}
-.spot-6 {
-  grid-area: spot-6;
-}
-.spot-7 {
-  grid-area: spot-7;
-}
-.spot-8 {
-  grid-area: spot-8;
-}
-.spot-9 {
-  grid-area: spot-9;
-}
-.spot-10 {
-  grid-area: spot-10;
-}
 .spot {
   .tooltip-wrapper {
     color: $color-secondary;
     height: 7.5rem;
-    border-top: $border;
-    border-bottom: $border;
+    border: $border;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -90,24 +59,11 @@ main {
     }
   }
 }
-.spot-left {
-  .tooltip-wrapper {
-    border-left: $border;
-  }
-}
-.spot-right {
-  .tooltip-wrapper {
-    border-right: $border;
-  }
-}
 svg {
   width: 8rem;
   height: 8rem;
   fill: $color-secondary-darker;
   z-index: 10;
-}
-.inverse-car {
-  transform: rotate(360deg) scaleX(-1);
 }
 .enter-parking {
   margin-top: 2rem;
@@ -185,4 +141,34 @@ svg {
   text-align: center;
   margin-bottom: 3rem;
   font-size: inherit;
+}
+.spot-1 {
+  grid-area: spot-1;
+}
+.spot-2 {
+  grid-area: spot-2;
+}
+.spot-3 {
+  grid-area: spot-3;
+}
+.spot-4 {
+  grid-area: spot-4;
+}
+.spot-5 {
+  grid-area: spot-5;
+}
+.spot-6 {
+  grid-area: spot-6;
+}
+.spot-7 {
+  grid-area: spot-7;
+}
+.spot-8 {
+  grid-area: spot-8;
+}
+.spot-9 {
+  grid-area: spot-9;
+}
+.spot-10 {
+  grid-area: spot-10;
 }

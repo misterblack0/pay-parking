@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { ReactComponent as CarIcon } from "./assets/icons/car.svg";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import Tooltip from "./Tooltip";
+import { ReactComponent as CarIcon } from "./assets/icons/car.svg";
 import "./App.scss";
 
 dayjs.extend(relativeTime);
@@ -19,9 +19,19 @@ function App() {
     e.preventDefault();
 
     if (spots.length < maxParkingSpots) {
+      let randomId;
+      const generateId = () => (randomId = Math.floor(Math.random() * 10) + 1);
+      generateId();
+
+      const spotsId = spots.map((spot) => spot.id);
+
+      while (spotsId.includes(randomId)) {
+        generateId();
+      }
+
       const updatedSpots = [...spots];
       updatedSpots.push({
-        id: !spots.length ? 1 : spots[spots.length - 1].id + 1,
+        id: randomId,
         number: carNumber,
         timeEnteredParking: dayjs(),
       });
@@ -90,9 +100,7 @@ function App() {
                 <div
                   key={spot.id}
                   onClick={() => handleExitParking(spot.id)}
-                  className={`spot spot-${spot.id} spot-${
-                    spot.id <= 5 ? "left" : "right"
-                  }`}
+                  className={`spot spot-${spot.id}`}
                 >
                   <Tooltip content="Exit parking">
                     {spot.number}
